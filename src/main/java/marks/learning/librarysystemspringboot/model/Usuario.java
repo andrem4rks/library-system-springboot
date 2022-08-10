@@ -32,7 +32,7 @@ public class Usuario {
     private String cpf;
 
     @Basic
-    @Temporal(TemporalType.DATE);
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataNascimento;
 
@@ -46,7 +46,7 @@ public class Usuario {
     @NotEmpty(message = "O login deve ser informado")
     @Size(min = 4, message = "O login deve ter no mínimo 4 caracteres")
     private String login;
-    
+
     private boolean ativo;
 
     public Usuario(String nome, String cpf, Date dataNascimento, String email, String password, String login, boolean ativo) {
