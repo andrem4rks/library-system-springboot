@@ -6,15 +6,15 @@
 
     <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}"/>
     <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
-    <script th:src="@{/bootstrap/5.1.3-dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
 
 </head>
 <body>
+    <div th:insert="fragments/publica-nav :: nav"></div>
     <div class="container">
         <div class="row">
             <div class="col">
                 <h2 th:text="${msgBemVindo}"></h2>
-                <a href="/usuario/novo" class="btn btn-primary">Novo usuário</a>
             </div>
         </div>
     </div>
