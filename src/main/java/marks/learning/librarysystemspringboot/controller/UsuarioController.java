@@ -1,5 +1,7 @@
 package marks.learning.librarysystemspringboot.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +48,32 @@ public class UsuarioController {
 
     @GetMapping("/admin/apagar/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model){
-        if(usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id);
-            
-        } else {
-            new IllegalArgumentException("Id inválido!"+id);
-        }
+        if(!usuarioRepository.existsById(id)) {
+            throw new IllegalArgumentException("Id inválido!"+id); 
+        }  
+        usuarioRepository.deleteById(id);    
         return "redirect:/usuario/admin/listar";
     } 
+
+    @GetMapping("/admin/editar/{id}")
+    public String editarUsuario(@PathVariable("id") long id, Model model) {
+        Optional<Usuario> usuarioVelho = usuarioRepository.findById(id);
+        if(!usuarioVelho.isPresent()) {
+            throw new IllegalArgumentException("Usuario invalido!" + id);
+        }
+        Usuario usuario = usuarioVelho.get();
+        model.addAttribute("usuario", usuario);
+        return "auth/user/user-alterar-usuario";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String salvarUsuario(@PathVariable("id") long id, @Valid Usuario usuario, BindingResult result) {
+        if(result.hasErrors()) {
+            usuario.setId(id);
+            return "/auth/user/user-alterar-usuario";
+        }
+        usuarioRepository.save(usuario);
+        return "redirect:/usuario/admin/listar";
+    }
 
 }
