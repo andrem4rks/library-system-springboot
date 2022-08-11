@@ -25,6 +25,7 @@
                             <th>CPF</th>
                             <th>Nascimento</th>
                             <th>E-mail</th>
+                            <td>Ações</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,14 @@
                             <td><span th:text="${usuario.cpf}"> Cpf </span></td>
                             <td><span th:text="${#dates.format(usuario.dataNascimento, 'dd/MM/yyyy')}"> Nascimento </span></td>
                             <td><span th:text="${usuario.email}"> Email </span></td>
+                            <td>
+                                <a class="btn btn-outline-danger btn-sm" href=""
+                                   th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
+                                   th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
+                                   onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
+                                   Apagar
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
