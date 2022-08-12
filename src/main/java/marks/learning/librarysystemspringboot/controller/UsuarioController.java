@@ -31,10 +31,26 @@ public class UsuarioController {
     }
 
     @PostMapping("/salvar")
-    public String salvarUsuario(@Valid Usuario usuario, BindingResult result, RedirectAttributes attributes) {
+    public String salvarUsuario(@Valid Usuario usuario, BindingResult result,Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "/publica-criar-usuario";
         }
+
+        Usuario usrLogin = usuarioRepository.findByLogin(usuario.getLogin());
+        Usuario usrCpf = usuarioRepository.findByCpf(usuario.getCpf());
+
+        if(usrCpf != null) {
+            model.addAttribute("cpfExiste", "CPF já existe cadastrado");
+        }
+
+        if(usrLogin != null) {
+            model.addAttribute("loginExiste", "Login já existe cadastrado");
+        }
+
+        if(usrLogin != null || usrCpf != null) {
+            return "/publica-criar-usuario";
+        }
+
         usuarioRepository.save(usuario);
         attributes.addFlashAttribute("mensagem", "Usuário salvo com sucesso!");
         return "redirect:/usuario/novo";
@@ -67,13 +83,46 @@ public class UsuarioController {
     }
 
     @PostMapping("/editar/{id}")
-    public String salvarUsuario(@PathVariable("id") long id, @Valid Usuario usuario, BindingResult result) {
-        if(result.hasErrors()) {
+    public String salvarUsuario(@PathVariable("id") long id, @Valid Usuario usuario, BindingResult result, Model model) {
+        String testCpf = usuario.getCpf();
+        String testLogin = usuario.getLogin();
+
+        Usuario usrCpf = usuarioRepository.findByCpf(usuario.getCpf());
+        Usuario usrLogin = usuarioRepository.findByLogin(usuario.getLogin());
+
+        boolean verif = false;
+
+
+        if(!result.hasErrors()){
+            if(usrCpf != null) {
+                if(id != usuarioRepository.findByCpf(testCpf).getId()) {
+                    model.addAttribute("cpfExiste", "CPF pertence a outro usuário!");
+                    verif = true;
+                }
+            } 
+            if(usrLogin != null) {
+                if(id != usuarioRepository.findByLogin(testLogin).getId()) {                   
+                    model.addAttribute("loginExiste", "Login pertence a outro usuário!");
+                    verif = true;
+                }
+            }  
+        } else {
             usuario.setId(id);
+            return "/auth/user/user-alterar-usuario"; 
+        }
+        
+
+        if(verif) {
             return "/auth/user/user-alterar-usuario";
         }
+
         usuarioRepository.save(usuario);
         return "redirect:/usuario/admin/listar";
+
+
+            
+
+        
     }
 
 }

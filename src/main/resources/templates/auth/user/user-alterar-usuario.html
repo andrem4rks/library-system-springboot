@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}" />
     <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
     <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
     <style>
         .mensagem {
@@ -22,91 +23,62 @@
     <div th:insert="fragments/publica-nav :: nav">
 
     </div>
-    <div class="container center-block">
-        <div class="row ">
-            <div class="col ">
+    <div class="container" id="form-cont">
 
-                <h2>Alterar usuário</h2>
-                <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <span th:text="${mensagem}"></span>
-                </div>
 
-                <form th:action="@{/usuario/editar/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
-
-                    <div class="row mb-1">
-
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">Nome:</label>
-                            <input type="text" class="form-control" th:field="*{nome}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-1">
-
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">CPF:</label>
-                            <input type="text" class="form-control" th:field="*{cpf}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-1">
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">Nascimento:</label>
-                            <input type="text" class="form-control" th:field="*{dataNascimento}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('dataNascimento')}"
-                                th:errors="*{dataNascimento}"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-1">
-
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">Email:</label>
-                            <input type="text" class="form-control" th:field="*{email}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-1">
-
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">Login:</label>
-                            <input type="text" class="form-control" th:field="*{login}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
-                        </div>
-                    </div>
-
-                    <div class="row mb-1">
-
-                        <div class="col-sm-5">
-                            <label class="col-sm-1 col-form-label">Senha:</label>
-                            <input type="text" class="form-control" th:field="*{password}">
-                        </div>
-                        <div class="col-sm-5">
-                            <span class="mensagem" th:if="${#fields.hasErrors('password')}"
-                                th:errors="*{password}"></span>
-                        </div>
-                    </div>
-
-                    <input type="submit" class="btn btn-primary" value="Editar">
-
-                </form>
-
-            </div>
+        <h2>Alterar usuário</h2>
+        <div class="alert alert-success alert-dismissible fade show" th:if="${mensagem}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span th:text="${mensagem}"></span>
         </div>
+
+        <form th:action="@{/usuario/editar/{id}(id=${usuario.id})}" th:object="${usuario}" method="post">
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">Nome:</label>
+                <input type="text" class="form-control" th:field="*{nome}">
+                <span class="mensagem" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+            </div>
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">CPF:</label>
+                <input type="text" class="form-control" th:field="*{cpf}">
+                <span class="mensagem" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+                <span class="mensagem" th:if="${cpfExiste}" th:text="${cpfExiste}"></span>
+            </div>
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">Nascimento:</label>
+                <input type="text" class="form-control" th:field="*{dataNascimento}">
+                <span class="mensagem" th:if="${#fields.hasErrors('dataNascimento')}"
+                    th:errors="*{dataNascimento}"></span>
+            </div>
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">Email:</label>
+                <input type="text" class="form-control" th:field="*{email}">
+                <span class="mensagem" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">Login:</label>
+                <input type="text" class="form-control" th:field="*{login}">
+                <span class="mensagem justify-content-center" th:if="${#fields.hasErrors('login')}"
+                    th:errors="*{login}"></span>
+                <span class="mensagem" th:if="${loginExiste}" th:text="${loginExiste}"></span>
+            </div>
+
+            <div class="col">
+                <label class="col-sm-1 col-form-label">Senha:</label>
+                <input type="text" class="form-control" th:field="*{password}">
+                <span class="mensagem" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Editar">
+
+        </form>
+
+
     </div>
 
 

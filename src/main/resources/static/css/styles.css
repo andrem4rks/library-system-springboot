@@ -1,0 +1,40 @@
+.scale-in-center {
+	-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+    
+    .mensagem {
+        animation: myAnim 1s ease 0s 1 normal forwards;
+        color: red;
+    }
+    @keyframes myAnim {
+        0% {
+            opacity: 1;
+        }
+    
+        50% {
+            opacity: 0.2;
+        }
+    
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .btn {
+        margin-top: 7px;
+    }
+
+    #form-cont {
+        padding: 0 auto;
+        width: 400px;
+        min-width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    #btn-apagar{
+        margin-right: 20px;
+    }

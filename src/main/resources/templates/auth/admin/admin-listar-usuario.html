@@ -8,8 +8,7 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}" />
     <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
-
-
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 </head>
 
@@ -41,7 +40,7 @@
                                 </span></td>
                             <td><span th:text="${usuario.email}"> Email </span></td>
                             <td>
-                                <a class="btn btn-outline-danger btn-sm" href=""
+                                <a class="btn btn-outline-danger btn-sm" href="" id="btn-apagar"
                                     th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
                                     th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
                                     onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
