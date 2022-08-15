@@ -1,5 +1,7 @@
 package marks.learning.librarysystemspringboot.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import marks.learning.librarysystemspringboot.model.Papel;
 import marks.learning.librarysystemspringboot.model.Usuario;
+import marks.learning.librarysystemspringboot.repository.papelRepository;
 import marks.learning.librarysystemspringboot.repository.usuarioRepository;
 
 @Controller
@@ -23,6 +27,9 @@ public class UsuarioController {
 
     @Autowired
     private usuarioRepository usuarioRepository;
+
+    @Autowired
+    private papelRepository papelRepository;
 
     @GetMapping("/novo")
     public String adicionarUsuario(Model model) {
@@ -50,6 +57,12 @@ public class UsuarioController {
         if(usrLogin != null || usrCpf != null) {
             return "/publica-criar-usuario";
         }
+
+        //busca o objeto de papel pelo seu nome
+        Papel papel = papelRepository.findByPapel("USER");
+        List<Papel> papeis = new ArrayList<Papel>();
+        papeis.add(papel);
+        usuario.setPapeis(papeis); // associa o papel USER a todos os novos usuarios
 
         usuarioRepository.save(usuario);
         attributes.addFlashAttribute("mensagem", "Usuário salvo com sucesso!");
@@ -100,6 +113,7 @@ public class UsuarioController {
                     verif = true;
                 }
             } 
+
             if(usrLogin != null) {
                 if(id != usuarioRepository.findByLogin(testLogin).getId()) {                   
                     model.addAttribute("loginExiste", "Login pertence a outro usuário!");
@@ -119,10 +133,6 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
         return "redirect:/usuario/admin/listar";
 
-
-            
-
-        
     }
 
 }
