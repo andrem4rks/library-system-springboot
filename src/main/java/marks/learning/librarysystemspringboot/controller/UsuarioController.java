@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import marks.learning.librarysystemspringboot.model.Papel;
@@ -92,11 +93,13 @@ public class UsuarioController {
         }
         Usuario usuario = usuarioVelho.get();
         model.addAttribute("usuario", usuario);
+        model.addAttribute("listaPapeis", papelRepository.findAll());
+
         return "auth/user/user-alterar-usuario";
     }
 
     @PostMapping("/editar/{id}")
-    public String salvarUsuario(@PathVariable("id") long id, @Valid Usuario usuario, BindingResult result, Model model) {
+    public String salvarUsuario(@PathVariable("id") long id, @RequestParam(value = "pps",required = false) int[] pps, @Valid Usuario usuario,  BindingResult result, Model model) {
         String testCpf = usuario.getCpf();
         String testLogin = usuario.getLogin();
 
@@ -124,10 +127,29 @@ public class UsuarioController {
             usuario.setId(id);
             return "/auth/user/user-alterar-usuario"; 
         }
-        
 
+        if(pps == null) {
+            usuario.setId(id);
+            model.addAttribute("papelInexistente", "Pelo menos um papel deve ser informado!");
+            verif = true;
+        } else {
+            List<Papel>  papeisLocal = new ArrayList<Papel>();
+            for(int i = 0; i < pps.length; i++) {
+                long idPapel = pps[i];
+                System.out.println(pps[i]);
+                Optional<Papel> papelOptional = papelRepository.findById(idPapel);
+                if(papelOptional.isPresent()) {
+                    Papel paper = papelOptional.get();
+                    papeisLocal.add(paper);
+                }
+            }
+            usuario.setPapeis(papeisLocal);
+        }
+        
         if(verif) {
-            return "/auth/user/user-alterar-usuario";
+            List<Papel> lista = papelRepository.findAll();
+            model.addAttribute("listaPapeis", lista);
+            return "/auth/user/user-alterar-usuario";        
         }
 
         usuarioRepository.save(usuario);
