@@ -143,7 +143,7 @@ public class UsuarioController {
                     papeisLocal.add(paper);
                 }
             }
-            usuario.setPapeis(papeisLocal);
+            usuario.setPapeis(papeisLocalaa);
         }
         
         if(verif) {
