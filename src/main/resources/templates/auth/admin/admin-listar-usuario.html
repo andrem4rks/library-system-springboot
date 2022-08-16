@@ -19,7 +19,7 @@
       <div class="col">
         <h1>Lista de Usuários</h1>
 
-        <table class="table table-striped" id="table1">
+        <table class="table table-striped " id="table1">
           <thead>
             <tr>
               <th>Nome</th>
@@ -27,6 +27,7 @@
               <th>Nascimento</th>
               <th>E-mail</th>
               <th>Papeis</th>
+              <th>Situação</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -38,13 +39,16 @@
               <td><span th:text="${usuario.nome}"> Nome </span></td>
               <td><span th:text="${usuario.cpf}"> Cpf </span></td>
               <td><span th:text="${#dates.format(usuario.dataNascimento, 'dd/MM/yyyy')}"> Nascimento</span></td>
-              <td><span th:text="${usuario.email}"> Email </span></td>
+              <td  class="align-middle"><span th:text="${usuario.email}"> Email </span></td>
               <td>
                 <th:block th:each="pp : ${usuario.papeis}">
                   <span th:text="${pp.papel}"> Papel </span><br />
                   </th>
               </td>
               <td>
+                <span th:text="${usuario.ativo} ? 'ATIVO' : 'INATIVO'">Situação</span>
+              </td>
+              <td class="col">
                 <a class="btn btn-outline-danger btn-sm" href="" id="btn-apagar"
                   th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
                   th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
@@ -63,6 +67,8 @@
               <th>CPF</th>
               <th>Nascimento</th>
               <th>E-mail</th>
+              <th>Papeis</th>
+              <th>Situação</th>
               <th>Ações</th>
             </tr>
           </tfoot>

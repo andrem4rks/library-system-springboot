@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
 
-    <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}" />
     <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
     <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 </head>
-<body>
+
+<body class="h-100">
     <div th:insert="fragments/publica-nav :: nav"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2 th:text="${msgBemVindo}"></h2>
+
+    <div class="container-fluid h-100">
+        <h2 th:text="${msgBemVindo}" class="text-center mb-4"></h2>
+        <div class="row justify-content-center">
+            <div class="align-self-center area-form">
+                <h4 class="col d-block text-center">Entre com sua conta</h4>
+
+                <form action="#" method="post" class="px-3">
+                    <div  class="row">
+                        <label for="" class="px-1 mb-1">Login</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="row mt-2">
+                        <label for="" class="px-1 mb-1">Senha</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <div class="row">      
+                       <a href="" class="btn btn-info mt-3">Entrar</a>
+                       <span class="px-1 mt-2">Não possui conta? <a href="/usuario/novo" class="btn btn-outline-info btn-sm py-0 my-0">Cadastre-se</a></span>
+                    </div>
+                    
+                </form>
             </div>
         </div>
     </div>
 </body>
+
 </html>

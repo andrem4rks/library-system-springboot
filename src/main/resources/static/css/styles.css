@@ -1,42 +1,49 @@
 .scale-in-center {
-	-webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
-    
-    .mensagem {
-        animation: myAnim 1s ease 0s 1 normal forwards;
-        color: red;
-    }
-    @keyframes myAnim {
-        0% {
-            opacity: 1;
-        }
-    
-        50% {
-            opacity: 0.2;
-        }
-    
-        100% {
-            opacity: 1;
-        }
+@keyframes myAnim {
+    0% {
+        opacity: 1;
     }
 
-    .btn {
-        margin-top: 7px;
+    50% {
+        opacity: 0.2;
     }
 
-    #form-cont {
-        padding: 0 auto;
-        width: 400px;
-        min-width: 300px;
+    100% {
+        opacity: 1;
     }
+}
 
-    h2 {
-        text-align: center;
-    }
+body {
+    height: 100%;    
+}
 
-    #btn-apagar{
-        margin-right: 20px;
-    }
+.area-form {
+    min-width: 200px;
+    max-width: 350px;
+}
 
-  
+.mensagem {
+    animation: myAnim 1s ease 0s 1 normal forwards;
+    color: red;
+}
+
+.btn {
+    margin-top: 7px;
+}
+
+#form-cont {
+    padding: 0 auto;
+    width: 400px;
+    min-width: 200px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#btn-apagar {
+    margin-right: 20px;
+}
