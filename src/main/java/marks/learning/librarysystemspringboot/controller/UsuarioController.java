@@ -143,16 +143,19 @@ public class UsuarioController {
                     papeisLocal.add(paper);
                 }
             }
-            usuario.setPapeis(papeisLocalaa);
+            Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+            if(usuarioOptional.isPresent()) {
+                Usuario usr = usuarioOptional.get();
+                usr.setPapeis(papeisLocal);
+                usuarioRepository.save(usr);
+            }
         }
         
         if(verif) {
-            List<Papel> lista = papelRepository.findAll();
-            model.addAttribute("listaPapeis", lista);
+            model.addAttribute("listaPapeis", papelRepository.findAll());
             return "/auth/user/user-alterar-usuario";        
         }
 
-        usuarioRepository.save(usuario);
         return "redirect:/usuario/admin/listar";
 
     }
