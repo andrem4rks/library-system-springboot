@@ -2,71 +2,76 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Lista de Usuários</title>
+  <meta charset="UTF-8">
+  <title>Lista de Usuários</title>
 
-    <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}" />
-    <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
-    <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}" />
+  <script th:src="@{/bootstrap-5.2.0-dist/js/bootstrap.min.js}"></script>
+  <script th:src="@{/jquery-3.6.0-dist/jquery-3.6.0.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 </head>
 
 <body>
-    <div th:insert="fragments/publica-nav :: nav"></div>
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col">
-                <h1>Lista de Usuários</h1>
+  <div th:insert="fragments/publica-nav :: nav"></div>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col">
+        <h1>Lista de Usuários</h1>
 
-                <table class="table table-striped" id="table1">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Nascimento</th>
-                            <th>E-mail</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${usuarios.empty}">
-                            <td colspan="2">Sem usuários!</td>
-                        </tr>
-                        <tr th:each="usuario : ${usuarios}">
-                            <td><span th:text="${usuario.nome}"> Nome </span></td>
-                            <td><span th:text="${usuario.cpf}"> Cpf </span></td>
-                            <td><span th:text="${#dates.format(usuario.dataNascimento, 'dd/MM/yyyy')}"> Nascimento
-                                </span></td>
-                            <td><span th:text="${usuario.email}"> Email </span></td>
-                            <td>
-                                <a class="btn btn-outline-danger btn-sm" href="" id="btn-apagar"
-                                    th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
-                                    th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
-                                    onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
-                                    Apagar
-                                </a>
-                                <a href="" class="btn btn-outline-primary btn-sm"
-                                    th:href="@{/usuario/admin/editar/{id}(id=${usuario.id})}">Editar
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Nascimento</th>
-                            <th>E-mail</th>
-                            <th>Ações</th>
-                        </tr>
-                    </tfoot>
-                </table>
+        <table class="table table-striped" id="table1">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Nascimento</th>
+              <th>E-mail</th>
+              <th>Papeis</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:if="${usuarios.empty}">
+              <td colspan="2">Sem usuários!</td>
+            </tr>
+            <tr th:each="usuario : ${usuarios}">
+              <td><span th:text="${usuario.nome}"> Nome </span></td>
+              <td><span th:text="${usuario.cpf}"> Cpf </span></td>
+              <td><span th:text="${#dates.format(usuario.dataNascimento, 'dd/MM/yyyy')}"> Nascimento</span></td>
+              <td><span th:text="${usuario.email}"> Email </span></td>
+              <td>
+                <th:block th:each="pp : ${usuario.papeis}">
+                  <span th:text="${pp.papel}"> Papel </span><br />
+                  </th>
+              </td>
+              <td>
+                <a class="btn btn-outline-danger btn-sm" href="" id="btn-apagar"
+                  th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}"
+                  th:data-confirm-delete="|Você gostaria de apagar ${usuario.nome}?|"
+                  onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">
+                  Apagar
+                </a>
+                <a href="" class="btn btn-outline-primary btn-sm"
+                  th:href="@{/usuario/admin/editar/{id}(id=${usuario.id})}">Editar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Nascimento</th>
+              <th>E-mail</th>
+              <th>Ações</th>
+            </tr>
+          </tfoot>
+        </table>
 
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </body>
 
 
@@ -74,9 +79,9 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 <script>
-    $(document).ready(function () {
-        $('#table1').DataTable();
-    });
+  $(document).ready(function () {
+    $('#table1').DataTable();
+  });
 </script>
 
 
