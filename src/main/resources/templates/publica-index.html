@@ -19,16 +19,22 @@
         <h2 th:text="${msgBemVindo}" class="text-center mb-4"></h2>
         <div class="row justify-content-center">
             <div class="align-self-center area-form">
+
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <span>Senha ou usuário inválido</span>
+                </div>
+
                 <h4 class="col d-block text-center">Entre com sua conta</h4>
 
-                <form action="#" method="post" class="px-3">
+                <form th:action="@{/login}" method="post" class="px-3">
                     <div  class="row">
-                        <label for="" class="px-1 mb-1">Login</label>
+                        <label for="" class="px-1 mb-1" name="username">Login</label>
                         <input type="text" class="form-control">
                     </div>
 
                     <div class="row mt-2">
-                        <label for="" class="px-1 mb-1">Senha</label>
+                        <label for="" class="px-1 mb-1" senha="password">Senha</label>
                         <input type="password" class="form-control">
                     </div>
 

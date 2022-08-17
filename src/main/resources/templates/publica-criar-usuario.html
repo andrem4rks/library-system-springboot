@@ -72,7 +72,14 @@
                 <span class="mensagem" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
             </div>
 
-            <input type="submit" class="btn btn-primary" value="Cadastrar">
+            <div class="row px-3">
+                <input type="submit" class="btn btn-info btn-fluid mt-2 mb-2" value="Cadastrar">
+            </div>
+           
+
+            <div class="col">
+                <span class="px-1 mt-2">Já possui conta? <a href="/" class="btn btn-outline-info btn-sm py-0 my-0">Login</a></span>
+            </div>
 
         </form>
 
